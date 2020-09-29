@@ -440,11 +440,14 @@ class Uniswap:
         output_token: AddressLike,
         qty: Union[int, Wei],
         recipient: AddressLike = None,
-        gas_limit = None,
-        nonce = None,
-        gas_price = None,
-        deadline = None,
-        max_slippage_bps = None
+        params: dict = {
+            "gas_limit": 5,
+            "nonce": 5,
+            "gas_price": 5,
+            "deadline": 1654000000,
+            "max_slippage_bps": 50
+
+        },
     ) -> HexBytes:
         """Make a trade by defining the qty of the input token."""
         if input_token == ETH_ADDRESS:
@@ -467,11 +470,15 @@ class Uniswap:
         output_token: AddressLike,
         qty: Union[int, Wei],
         recipient: AddressLike = None,
-        gas_limit = None,
-        nonce = None,
-        gas_price = None,
-        deadline = None,
-        max_slippage_bps = None
+        params: dict = {
+            "gas_limit": 5,
+            "nonce": 5,
+            "gas_price": 5,
+            "deadline": 1654000000,
+            "max_slippage_bps": 50
+
+        },
+
     ) -> HexBytes:
         """Make a trade by defining the qty of the output token."""
         if input_token == ETH_ADDRESS:
