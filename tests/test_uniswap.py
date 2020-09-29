@@ -265,7 +265,8 @@ class TestUniswap(object):
         with expectation():
             bal_in_before = client.get_token_balance(input_token)
 
-            r = client.make_trade(input_token, output_token, qty, recipient)
+            r = client.make_trade(input_token, output_token, qty, recipient, gas_limit=5)
+            print(r)
             tx = web3.eth.waitForTransactionReceipt(r)
             assert tx.status  # type: ignore
 
@@ -310,7 +311,7 @@ class TestUniswap(object):
         with expectation():
             balance_before = client.get_token_balance(output_token)
 
-            r = client.make_trade_output(input_token, output_token, qty, recipient)
+            r = client.make_trade_output(input_token, output_token, qty, recipient, gas_price=5)
             tx = web3.eth.waitForTransactionReceipt(r, timeout=30)
             assert tx.status  # type: ignore
 
