@@ -130,7 +130,7 @@ class Uniswap:
         web3: Web3 = None,
         version: int = 1,
         max_slippage: float = 0.1,
-        deadline: int = None,
+        deadline_mins: int = None,
     ) -> None:
         self.address: AddressLike = _str_to_addr(address) if isinstance(
             address, str
@@ -138,8 +138,8 @@ class Uniswap:
         self.private_key = private_key
         self.version = version
 
-        if deadline:
-            self.deadline = deadline
+        if deadline_mins:
+            self.deadline = deadline_mins
 
         # TODO: Write tests for slippage
         self.max_slippage = max_slippage
@@ -750,7 +750,7 @@ class Uniswap:
     def _deadline(self) -> int:
         """Get a predefined deadline. 10min by default (same as the Uniswap SDK)."""
         if self.deadline:
-            return self.deadline
+            return int(time.time()) + self.deadline * 60
         return int(time.time()) + 10 * 60
 
     def _build_and_send_tx(
