@@ -1,3 +1,65 @@
+### Some modifications by Mun Kar Kin
+### Setup
+
+```
+
+pip3 install git+git://github.com/munkarkin96/uniswap-python.git
+
+or git clone https://github.com/munkarkin96/uniswap-python.git
+cd uniswap-python
+pip3 install .
+```
+
+### Template
+```python
+
+import time
+from web3 import Web3
+from uniswap import Uniswap
+
+address = "0xEd92A2d174f7212B736664E9dea337504d4767f6"        
+
+# don't worry, the private_key is useless, from testnet
+private_key = "0x44a270e3173a72b06dd255bc6bbc8ea9d1ccabaf23f09a354abb3d12e6f9582e"  
+
+DEADLINE = 10 
+
+
+def value_based_gas_price_strategy(web3, transaction_params):
+    if transaction_params['value'] > Web3.toWei(1, 'ether'):
+        return Web3.toWei(80, 'gwei')
+    else:
+        return Web3.toWei(7, 'gwei')
+    
+w3 = Web3(
+    Web3.HTTPProvider("http://localhost:8545", request_kwargs={"timeout": 60})
+    #Web3.HTTPProvider("https://mainnet.infura.io/v3/0fc91c7a3fc8492f9abe61bb0025507b", request_kwargs={"timeout": 60})
+)
+w3.eth.setGasPriceStrategy(value_based_gas_price_strategy)
+
+uniswap_wrapper = Uniswap(
+    address, 
+    private_key, 
+    version=2,
+    web3 = w3,
+    deadline_mins = DEADLINE,
+
+)  
+
+eth = "0x0000000000000000000000000000000000000000"
+bat = "0x0D8775F648430679A709E98d2b0Cb6250d2887EF"
+dai = "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359"
+
+trx_hash = uniswap_wrapper.make_trade(eth, bat, 1*10**18)
+
+trx_hash.hex() # returns transaction hash in string
+
+```
+
+
+
+
+
 <p align="center">
   <img width="350" height="290" src="https://user-images.githubusercontent.com/9441295/93878863-9c3d3000-fc8f-11ea-8071-fca01d6de8c4.png">
 </p>
