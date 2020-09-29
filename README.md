@@ -19,8 +19,7 @@ from uniswap import Uniswap
 
 address = "0xEd92A2d174f7212B736664E9dea337504d4767f6"        
 
-# don't worry, the private_key is useless, from testnet
-private_key = "0x44a270e3173a72b06dd255bc6bbc8ea9d1ccabaf23f09a354abb3d12e6f9582e"  
+private_key = "<private_key>"  
 
 DEADLINE = 10 
 
@@ -33,7 +32,6 @@ def value_based_gas_price_strategy(web3, transaction_params):
     
 w3 = Web3(
     Web3.HTTPProvider("http://localhost:8545", request_kwargs={"timeout": 60})
-    #Web3.HTTPProvider("https://mainnet.infura.io/v3/0fc91c7a3fc8492f9abe61bb0025507b", request_kwargs={"timeout": 60})
 )
 w3.eth.setGasPriceStrategy(value_based_gas_price_strategy)
 
