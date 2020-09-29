@@ -130,12 +130,16 @@ class Uniswap:
         web3: Web3 = None,
         version: int = 1,
         max_slippage: float = 0.1,
+        deadline: int = None,
     ) -> None:
         self.address: AddressLike = _str_to_addr(address) if isinstance(
             address, str
         ) else address
         self.private_key = private_key
         self.version = version
+
+        if deadline:
+            self.deadline = deadline
 
         # TODO: Write tests for slippage
         self.max_slippage = max_slippage
@@ -440,14 +444,6 @@ class Uniswap:
         output_token: AddressLike,
         qty: Union[int, Wei],
         recipient: AddressLike = None,
-        params: dict = {
-            "gas_limit": 5,
-            "nonce": 5,
-            "gas_price": 5,
-            "deadline": 1654000000,
-            "max_slippage_bps": 50
-
-        },
     ) -> HexBytes:
         """Make a trade by defining the qty of the input token."""
         if input_token == ETH_ADDRESS:
@@ -470,15 +466,6 @@ class Uniswap:
         output_token: AddressLike,
         qty: Union[int, Wei],
         recipient: AddressLike = None,
-        params: dict = {
-            "gas_limit": 5,
-            "nonce": 5,
-            "gas_price": 5,
-            "deadline": 1654000000,
-            "max_slippage_bps": 50
-
-        },
-
     ) -> HexBytes:
         """Make a trade by defining the qty of the output token."""
         if input_token == ETH_ADDRESS:
@@ -762,6 +749,8 @@ class Uniswap:
     # ------ Tx Utils ------------------------------------------------------------------
     def _deadline(self) -> int:
         """Get a predefined deadline. 10min by default (same as the Uniswap SDK)."""
+        if self.deadline:
+            return self.deadline
         return int(time.time()) + 10 * 60
 
     def _build_and_send_tx(
