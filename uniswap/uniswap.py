@@ -440,6 +440,7 @@ class Uniswap:
         output_token: AddressLike,
         qty: Union[int, Wei],
         recipient: AddressLike = None,
+        param = {}
     ) -> HexBytes:
         """Make a trade by defining the qty of the input token."""
         if input_token == ETH_ADDRESS:
@@ -462,6 +463,7 @@ class Uniswap:
         output_token: AddressLike,
         qty: Union[int, Wei],
         recipient: AddressLike = None,
+        param={}
     ) -> HexBytes:
         """Make a trade by defining the qty of the output token."""
         if input_token == ETH_ADDRESS:
