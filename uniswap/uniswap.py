@@ -759,7 +759,7 @@ class Uniswap:
         """Build and send a transaction."""
         if not tx_params:
             tx_params = self._get_tx_params()
-        print(tx_params)
+        # print(tx_params)
         transaction = function.buildTransaction(tx_params)
         signed_txn = self.w3.eth.account.sign_transaction(
             transaction, private_key=self.private_key
